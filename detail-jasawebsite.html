@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jasa Pembuatan Website - Vier Jasline</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+     <!-- Font Awesome Link (wajib) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .menu-item::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .menu-item.active::after,
+        .menu-item:hover::after {
+            width: 100%;
+        }
+
+        .animated-img {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .menu-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: white;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-white text-gray-800 scroll-smooth">
+
+    <!-- WhatsApp Chat Bubble -->
+    <div class="wa-premium-container">
+        <div class="wa-toggle-btn" id="waToggle">
+            <i class="fas fa-comment-dots"></i>
+        </div>
+        <div class="wa-popup-form hidden" id="waForm">
+            <div class="flex justify-between items-center mb-2">
+                <h4 class="wa-title">👋 <span id="typingText"></span></h4>
+                <button id="themeToggle" title="Toggle Theme"
+                    class="text-white bg-gray-700 px-2 py-1 rounded text-xs">🌙</button>
+            </div>
+            <input type="text" id="waName" placeholder="Nama kamu" class="wa-field" />
+        <select id="waService" class="wa-field">
+            <option disabled selected>Layanan yang dibutuhkan</option>
+            <option value="Pembuatan Website">Pembuatan Website</option>
+            <option value="Desain Casing">Desain Casing</option>
+        </select>
+
+            <textarea id="waMessage" placeholder="Ceritain dulu dong..." class="wa-field"></textarea>
+            <button onclick="sendWa()" class="wa-send">
+                <i class="fas fa-paper-plane"></i> Kirim via WhatsApp
+            </button>
+        </div>
+    </div>
+    
+   
+    <style>
+        :root {
+            --wa-bg: rgba(255, 255, 255, 0.8);
+            --wa-text: #111;
+            --wa-shadow: rgba(0, 0, 0, 0.2);
+        }
+    
+        body.dark-mode {
+            --wa-bg: rgba(40, 40, 40, 0.9);
+            --wa-text: #eee;
+            --wa-shadow: rgba(255, 255, 255, 0.1);
+        }
+    
+        .wa-premium-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            font-family: 'Segoe UI', sans-serif;
+        }
+    
+        .wa-toggle-btn {
+            width: 64px;
+            height: 64px;
+            background: #007aff;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px var(--wa-shadow);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: bounce 1.5s infinite;
+        }
+    
+        .wa-toggle-btn:hover {
+            transform: scale(1.1);
+        }
+    
+        .wa-popup-form {
+            width: 300px;
+            max-width: 90vw;
+            background: var(--wa-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 15px 40px var(--wa-shadow);
+            transform-origin: bottom right;
+            transform: scale(0.4) translateY(100px) rotate(-20deg);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+        }
+    
+        .wa-popup-form.show {
+            transform: scale(1) translateY(0) rotate(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+    
+        .wa-title {
+            color: var(--wa-text);
+            margin-bottom: 8px;
+            min-height: 24px;
+        }
+    
+        .wa-field {
+    width: 100%;
+    padding: 8px 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--wa-text);
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.wa-field {
+    width: 100%;
+    padding: 8px 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--wa-text);
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Responsive tweak */
+@media (max-width: 640px) {
+    .wa-field {
+        font-size: 13px;
+        padding: 7px 10px;
+    }
+}
+
+body.dark-mode .wa-field {
+    background: rgba(60, 60, 60, 0.9);
+    color: #f0f0f0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+
+/* Responsive tweak */
+@media (max-width: 640px) {
+    .wa-field {
+        font-size: 13px;
+        padding: 7px 10px;
+    }
+}
+
+body.dark-mode .wa-field {
+    background: rgba(60, 60, 60, 0.9);
+    color: #f0f0f0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+    
+        .wa-popup-form textarea {
+            resize: none;
+            min-height: 80px;
+        }
+    
+        body.dark-mode .wa-field {
+            background: rgba(80, 80, 80, 0.8);
+            color: white;
+        }
+    
+        .wa-send {
+            margin-top: 16px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            background: #007aff;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(0, 122, 255, 0.5);
+            transition: background 0.3s ease;
+        }
+    
+        .wa-send:hover {
+            background: #005bb5;
+        }
+    
+        @keyframes bounce {
+    
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+    
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+    
+        @media (max-width: 640px) {
+            .wa-popup-form {
+                width: 90vw;
+                padding: 16px;
+                margin-right: 0;
+                right: 5vw;
+                left: auto;
+            }
+    
+            .wa-toggle-btn {
+                width: 52px;
+                height: 52px;
+                font-size: 22px;
+            }
+        }
+    </style>
+    
+    <script>
+        const waToggle = document.getElementById('waToggle');
+        const waForm = document.getElementById('waForm');
+        const typingText = document.getElementById('typingText');
+        const themeToggle = document.getElementById('themeToggle');
+        const sound = new Audio('https://www.soundjay.com/button/sounds/button-29.mp3');
+
+        // Dark mode setup
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+
+        // Toggle with animation
+        waToggle.addEventListener('click', () => {
+            const isVisible = waForm.classList.contains('show');
+            if (isVisible) {
+                waForm.classList.remove('show');
+                setTimeout(() => waForm.classList.add('hidden'), 400);
+            } else {
+                waForm.classList.remove('hidden');
+                setTimeout(() => waForm.classList.add('show'), 10);
+            }
+            sound.play();
+        });
+
+        // Focus sound
+        document.querySelectorAll('.wa-field').forEach(input => {
+            input.addEventListener('focus', () => sound.play());
+        });
+
+        // WhatsApp sending
+        function sendWa() {
+            const name = document.getElementById('waName').value.trim();
+            const service = document.getElementById('waService').value;
+            const message = document.getElementById('waMessage').value.trim();
+
+            if (!name || !service || !message) {
+                alert("Yuk isi semuanya dulu dedek 💖");
+                return;
+            }
+
+            const base = 'https://wa.me/62895404171275';
+            const text = `Halo! Saya ${name}, ingin konsultasi tentang *${service}*.%0A%0APesan saya: ${message}`;
+            window.open(`${base}?text=${text}`, '_blank');
+        }
+
+        // Typing effect
+        const greeting = "Hallo, ayo konsultasi!";
+        let index = 0;
+        function typeGreeting() {
+            if (index < greeting.length) {
+                typingText.innerHTML += greeting.charAt(index);
+                index++;
+                setTimeout(typeGreeting, 50);
+            }
+        }
+        window.addEventListener('load', typeGreeting);
+    </script>
+
+
+    <!-- Navbar -->
+    <header
+        class="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 text-white shadow-md transition duration-300">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl sm:text-2xl font-bold">Vier Jasline</h1>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex space-x-6 text-sm font-medium" id="nav-links">
+                <a href="index.html" class="menu-item pb-1 relative" data-scroll>Beranda</a>
+            </nav>
+    </header>
+
+    <!-- Hero -->
+    <section id="home"
+        class="pt-32 md:pt-40 pb-20 px-6 md:px-20 flex flex-col md:flex-row items-center justify-between min-h-screen bg-white">
+
+        <!-- Left Content -->
+        <div class="md:w-1/2 mb-12 md:mb-0" data-aos="fade-right">
+            <h2 class="text-4xl md:text-5xl font-bold text-blue-700 mb-6 leading-snug">
+                Selamat datang di Jasa Website <br class="hidden sm:inline" /> Vier Jasline! 👋
+            </h2>
+            <p class="text-gray-600 text-lg leading-relaxed">
+                Kami bantu kamu mewujudkan website yang cepat, cantik, dan profesional untuk bisnis atau personal
+                branding
+                kamu.
+            </p>
+        </div>
+
+        <!-- Right Image -->
+        <div class="md:w-1/2 flex justify-center" data-aos="fade-left">
+            <img src="hello.png" alt="Animasi Web"
+                class="w-full max-w-md animate-float-smooth select-none pointer-events-none" />
+        </div>
+    </section>
+
+    <!-- Floating Animation -->
+    <style>
+        @keyframes floatSmooth {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .animate-float-smooth {
+            animation: floatSmooth 6s ease-in-out infinite;
+        }
+    </style>
+
+    <!-- Tentang Jasa Website -->
+    <section id="about" class="bg-white py-24 px-6 md:px-12">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+
+            <!-- Gambar dengan animasi smooth -->
+            <div class="flex justify-center" data-aos="fade-right">
+                <img src="bous.png" alt="Tentang Jasa Website" class="w-full max-w-md animate-float-slow" />
+            </div>
+
+            <!-- Konten Meyakinkan -->
+            <div class="space-y-6" data-aos="fade-left">
+                <h3 class="text-4xl font-bold text-blue-600">
+                    Bangun Website Profesional Bersama Kami
+                </h3>
+                <p class="text-gray-700 text-lg leading-relaxed">
+                    Kami adalah penyedia jasa pembuatan website terpercaya yang telah membantu puluhan brand, UMKM,
+                    hingga
+                    personal branding hadir secara digital. Dengan desain premium, performa cepat, dan user experience
+                    yang
+                    optimal, kami pastikan website Anda siap bersaing di era digital.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm md:text-base text-gray-600">
+                    <div class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-blue-600 mt-1" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Desain modern & eksklusif</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-blue-600 mt-1" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Responsive di semua perangkat</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-blue-600 mt-1" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Custom fitur sesuai kebutuhan</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-blue-600 mt-1" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Gratis konsultasi & revisi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Animasi Float -->
+    <style>
+        @keyframes float-slow {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .animate-float-slow {
+            animation: float-slow 6s ease-in-out infinite;
+        }
+    </style>
+
+    <!-- Dokumentasi -->
+    <section id="portfolio" class="py-20 bg-white px-6 md:px-20">
+        <h3 class="text-3xl font-bold text-center text-blue-600 mb-12" data-aos="fade-up">
+            Dokumentasi Proyek
+        </h3>
+    
+        <!-- Navigasi & Grid -->
+        <div class="relative max-w-6xl mx-auto">
+            <!-- Tombol Sebelumnya -->
+            <button id="prevBtn"
+                class="absolute left-0 top-1/2 -translate-y-1/2 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 transform hover:scale-110 z-10"
+                data-aos="fade-right">
+                <span class="text-3xl font-semibold">&lt;</span>
+            </button>
+    
+            <!-- Grid Gambar -->
+            <div id="projectGrid" class="grid grid-cols-2 gap-6" data-aos="zoom-in-up">
+                <!-- Diisi lewat JavaScript -->
+            </div>
+    
+            <!-- Tombol Selanjutnya -->
+            <button id="nextBtn"
+                class="absolute right-0 top-1/2 -translate-y-1/2 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 transform hover:scale-110 z-10"
+                data-aos="fade-left">
+                <span class="text-3xl font-semibold">&gt;</span>
+            </button>
+        </div>
+    </section>
+    
+    <script>
+        const projects = [
+            { img: 'web1.png', alt: 'Proyek 1' },
+            { img: 'web2.png', alt: 'Proyek 2' },
+            { img: 'web3.png', alt: 'Proyek 3' },
+            { img: 'web1.png', alt: 'Proyek 4' },
+            { img: 'web2.png', alt: 'Proyek 5' },
+            { img: 'web3.png', alt: 'Proyek 6' },
+        ];
+
+        let currentPage = 0;
+        const itemsPerPage = 4;
+        const gridContainer = document.getElementById('projectGrid');
+
+        function renderGrid() {
+            gridContainer.innerHTML = '';
+            const start = currentPage * itemsPerPage;
+            const selected = projects.slice(start, start + itemsPerPage);
+            selected.forEach(p => {
+                const img = document.createElement('img');
+                img.src = p.img;
+                img.alt = p.alt;
+                img.className = 'w-full h-auto max-h-[300px] object-cover rounded-xl shadow-md hover:opacity-90 transition';
+                gridContainer.appendChild(img);
+            });
+        }
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage--;
+                renderGrid();
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if ((currentPage + 1) * itemsPerPage < projects.length) {
+                currentPage++;
+                renderGrid();
+            }
+        });
+
+        renderGrid();
+    </script>
+
+    <!-- Sistem -->
+    <section class="bg-gray-50 py-20 px-6 md:px-20">
+        <h3 class="text-3xl font-bold text-center text-blue-600 mb-16" data-aos="fade-up">
+            Alur Pembuatan
+        </h3>
+
+        <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+            <!-- Langkah 1 -->
+            <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 group text-center"
+                data-aos="fade-up" data-aos-delay="0">
+                <div
+                    class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-blue-100 text-blue-600 rounded-full text-2xl font-bold group-hover:bg-blue-600 group-hover:text-white transition">
+                    1
+                </div>
+                <h4 class="text-xl font-semibold mb-2 text-gray-800">Konsultasi</h4>
+                <p class="text-gray-600">Diskusi kebutuhan dan fitur yang diinginkan agar solusi tepat sasaran.</p>
+            </div>
+
+            <!-- Langkah 2 -->
+            <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 group text-center"
+                data-aos="fade-up" data-aos-delay="100">
+                <div
+                    class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-blue-100 text-blue-600 rounded-full text-2xl font-bold group-hover:bg-blue-600 group-hover:text-white transition">
+                    2
+                </div>
+                <h4 class="text-xl font-semibold mb-2 text-gray-800">Desain UI/UX</h4>
+                <p class="text-gray-600">Mendesain antarmuka yang estetis dan user-friendly sesuai identitas brand.</p>
+            </div>
+
+            <!-- Langkah 3 -->
+            <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 group text-center"
+                data-aos="fade-up" data-aos-delay="200">
+                <div
+                    class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-blue-100 text-blue-600 rounded-full text-2xl font-bold group-hover:bg-blue-600 group-hover:text-white transition">
+                    3
+                </div>
+                <h4 class="text-xl font-semibold mb-2 text-gray-800">Pengembangan</h4>
+                <p class="text-gray-600">Mulai coding, integrasi fitur, serta pengujian performa dan bug.</p>
+            </div>
+
+            <!-- Langkah 4 -->
+            <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 group text-center"
+                data-aos="fade-up" data-aos-delay="300">
+                <div
+                    class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-blue-100 text-blue-600 rounded-full text-2xl font-bold group-hover:bg-blue-600 group-hover:text-white transition">
+                    4
+                </div>
+                <h4 class="text-xl font-semibold mb-2 text-gray-800">Revisi Final</h4>
+                <p class="text-gray-600">Kamu bisa meminta penyesuaian agar hasil benar-benar sesuai harapan.</p>
+            </div>
+
+            <!-- Langkah 5 -->
+            <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 group text-center"
+                data-aos="fade-up" data-aos-delay="400">
+                <div
+                    class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-blue-100 text-blue-600 rounded-full text-2xl font-bold group-hover:bg-blue-600 group-hover:text-white transition">
+                    5
+                </div>
+                <h4 class="text-xl font-semibold mb-2 text-gray-800">Publikasi</h4>
+                <p class="text-gray-600">Website dipublikasikan, dan kami berikan pelatihan cara penggunaannya.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teknologi -->
+    <section class="py-24 px-6 md:px-20 bg-white flex flex-col md:flex-row items-center gap-14">
+        <!-- Gambar animasi kiri -->
+        <div class="w-full md:w-1/2" data-aos="fade-right">
+            <img src="tools.png" alt="Animated Illustration"
+                class="w-full max-w-md mx-auto animate-float drop-shadow-lg" />
+        </div>
+
+        <!-- Tools kanan -->
+        <div class="w-full md:w-1/2" data-aos="fade-left">
+            <h3 class="text-4xl font-extrabold text-blue-700 mb-4 text-center md:text-left tracking-wide">
+                Teknologi yang Digunakan
+            </h3>
+            <p class="text-sm text-gray-500 mb-5 text-center md:text-left italic">Swipe untuk melihat tools lainnya →
+            </p>
+
+            <div class="flex overflow-x-auto gap-5 py-4 scrollbar-hide">
+                <!-- Satu item -->
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank"
+                    class="group flex-shrink-0 bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 rounded-2xl p-5 shadow-md transition-all duration-300 w-44 text-center transform hover:scale-105">
+                    <img src="html5.png" alt="HTML" class="w-12 h-12 mx-auto mb-3 group-hover:scale-110 transition">
+                    <p class="text-sm font-semibold text-blue-800">HTML</p>
+                </a>
+
+                <a href="https://tailwindcss.com" target="_blank"
+                    class="group flex-shrink-0 bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 rounded-2xl p-5 shadow-md transition-all duration-300 w-44 text-center transform hover:scale-105">
+                    <img src="node.png" alt="Tailwind CSS"
+                        class="w-12 h-12 mx-auto mb-3 group-hover:scale-110 transition">
+                    <p class="text-sm font-semibold text-blue-800">Tailwind CSS</p>
+                </a>
+
+                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank"
+                    class="group flex-shrink-0 bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 rounded-2xl p-5 shadow-md transition-all duration-300 w-44 text-center transform hover:scale-105">
+                    <img src="javascript-original" alt="JavaScript"
+                        class="w-12 h-12 mx-auto mb-3 group-hover:scale-110 transition">
+                    <p class="text-sm font-semibold text-blue-800">JavaScript</p>
+                </a>
+
+                <a href="https://laravel.com" target="_blank"
+                    class="group flex-shrink-0 bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 rounded-2xl p-5 shadow-md transition-all duration-300 w-44 text-center transform hover:scale-105">
+                    <img src="laravel.png" alt="Laravel"
+                        class="w-12 h-12 mx-auto mb-3 group-hover:scale-110 transition">
+                    <p class="text-sm font-semibold text-blue-800">Laravel / PHP</p>
+                </a>
+
+                <a href="https://wordpress.org" target="_blank"
+                    class="group flex-shrink-0 bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 rounded-2xl p-5 shadow-md transition-all duration-300 w-44 text-center transform hover:scale-105">
+                    <img src="wordpress-logo.png" alt="WordPress"
+                        class="w-12 h-12 mx-auto mb-3 group-hover:scale-110 transition">
+                    <p class="text-sm font-semibold text-blue-800">WordPress</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tambahan animasi CSS -->
+    <style>
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+
+    <!-- Estimasi - Clean Transparent Layout -->
+    <section class="py-20 px-6 md:px-20 bg-gradient-to-br from-white/80 via-blue-50/30 to-white/60">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-14">
+
+            <!-- Kiri: Estimasi Card -->
+            <div data-aos="fade-right"
+                class="bg-white/30 backdrop-blur-lg border border-blue-300 shadow-xl rounded-3xl p-8 md:p-10 transition-transform duration-500 hover:scale-[1.02] hover:shadow-2xl group">
+
+                <!-- Header -->
+                <div class="flex items-center gap-4 mb-6">
+                    <div
+                        class="bg-gradient-to-br from-blue-100/60 to-blue-200/40 backdrop-blur-sm rounded-full p-4 shadow-md group-hover:rotate-6 transition-transform duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-blue-700" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-3xl font-extrabold text-blue-800 drop-shadow-sm">Estimasi Deadline</h3>
+                </div>
+
+                <!-- Deskripsi -->
+                <p class="text-gray-700 text-base md:text-lg leading-relaxed font-medium mb-6">
+                    Proyek rata-rata selesai dalam
+                    <span class="text-blue-700 font-semibold underline underline-offset-4 decoration-blue-300">7–14 hari
+                        kerja</span>,
+                    bergantung pada kompleksitas fitur dan jumlah revisi. <br />
+                    <span class="text-sm text-blue-800 mt-2 block italic">*Waktu pengerjaan disesuaikan dengan kriteria
+                        &
+                        jenis website yang dipesan.</span>
+                </p>
+
+                <!-- Tombol Cek Jadwal -->
+                <button onclick="toggleModal()"
+                    class="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-xl font-semibold shadow-md transition-all duration-300">
+                    Cek Jadwal Estimasi
+                </button>
+            </div>
+
+            <!-- Kanan: Gambar dengan animasi -->
+            <div class="relative flex justify-center items-center img-container" data-aos="fade-left">
+                <img src="time.png" alt="Estimasi"
+                    class="w-[85%] max-w-sm animate-float-smooth select-none pointer-events-none rounded-xl transition-transform duration-500 hover:scale-105" />
+            </div>
+        </div>
+
+        <!-- Modal Pop-Up -->
+        <div id="estimasiModal"
+            class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden items-center justify-center z-50">
+            <div class="bg-white rounded-2xl p-6 md:p-8 shadow-2xl w-[90%] max-w-lg relative animate-fade-in">
+                <!-- Close Button -->
+                <button onclick="toggleModal()" class="absolute top-4 right-4 text-gray-600 hover:text-blue-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                <h4 class="text-xl font-bold text-blue-800 mb-4">Detail Estimasi Pengerjaan</h4>
+                <ul class="space-y-3 text-gray-700 text-base leading-relaxed">
+                    <li><strong>Hari 1–2:</strong> Diskusi kebutuhan, pengumpulan aset, dan wireframe awal.</li>
+                    <li><strong>Hari 3–6:</strong> Desain halaman utama & landing page.</li>
+                    <li><strong>Hari 7–10:</strong> Pengembangan fitur utama & layout halaman lainnya.</li>
+                    <li><strong>Hari 11–14:</strong> Revisi, testing, dan finalisasi konten.</li>
+                </ul>
+                <p class="mt-4 text-sm text-blue-700 italic">*Estimasi waktu dapat berubah sesuai jenis, fitur, dan
+                    kompleksitas website yang dipesan.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Animasi & Script -->
+    <style>
+        @keyframes floatSmooth {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-12px) scale(1.02);
+            }
+
+            100% {
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .animate-float-smooth {
+            animation: floatSmooth 6s ease-in-out infinite;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+    </style>
+
+    <script>
+        function toggleModal() {
+            const modal = document.getElementById('estimasiModal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+        }
+    </script>
+
+    <!-- Booking Section -->
+    <section class="py-20 px-6 md:px-16 bg-white" id="booking">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
+
+            <!-- Left: Floating Image -->
+            <div class="flex justify-center md:justify-start" data-aos="fade-right">
+                <img src="conc.png" alt="Booking Illustration"
+                    class="w-64 sm:w-72 md:w-80 animate-float-smooth select-none pointer-events-none" />
+            </div>
+
+            <!-- Right: Booking Steps -->
+            <div data-aos="fade-left">
+                <h3 class="text-3xl font-extrabold text-blue-800 mb-4 text-center md:text-left">Cara Booking Website
+                </h3>
+                <p class="text-gray-600 mb-6 text-base md:text-lg text-center md:text-left">
+                    Proses cepat, mudah, dan transparan. Ikuti langkah-langkahnya berikut ini~
+                </p>
+
+                <!-- Horizontal Scrollable Steps -->
+                <div class="overflow-x-auto pb-2">
+                    <div class="flex gap-4 w-max">
+                        <!-- Step Card Component -->
+                        <div
+                            class="min-w-[200px] bg-white border border-blue-100 rounded-xl p-4 text-center shadow-md hover:shadow-xl transition-all duration-300">
+                            <div class="text-green-500 text-2xl mb-2"><i class="fas fa-phone"></i></div>
+                            <h4 class="font-semibold text-gray-800 mb-1">Hubungi Kami</h4>
+                            <p class="text-sm text-gray-500">Klik WhatsApp & mulai ngobrol.</p>
+                        </div>
+                        <div
+                            class="min-w-[200px] bg-white border border-blue-100 rounded-xl p-4 text-center shadow-md hover:shadow-xl transition-all duration-300">
+                            <div class="text-green-500 text-2xl mb-2"><i class="fas fa-comments"></i></div>
+                            <h4 class="font-semibold text-gray-800 mb-1">Konsultasi</h4>
+                            <p class="text-sm text-gray-500">Diskusi fitur, desain, dan kebutuhan kamu.</p>
+                        </div>
+                        <div
+                            class="min-w-[200px] bg-white border border-blue-100 rounded-xl p-4 text-center shadow-md hover:shadow-xl transition-all duration-300">
+                            <div class="text-green-500 text-2xl mb-2"><i class="fas fa-wallet"></i></div>
+                            <h4 class="font-semibold text-gray-800 mb-1">Bayar DP 50%</h4>
+                            <p class="text-sm text-gray-500">Agar proyek langsung dikerjakan.</p>
+                        </div>
+                        <div
+                            class="min-w-[200px] bg-white border border-blue-100 rounded-xl p-4 text-center shadow-md hover:shadow-xl transition-all duration-300">
+                            <div class="text-green-500 text-2xl mb-2"><i class="fas fa-sync-alt"></i></div>
+                            <h4 class="font-semibold text-gray-800 mb-1">Revisi Maks. 2x</h4>
+                            <p class="text-sm text-gray-500">Kami sesuaikan dengan keinginan kamu.</p>
+                        </div>
+                        <div
+                            class="min-w-[200px] bg-white border border-blue-100 rounded-xl p-4 text-center shadow-md hover:shadow-xl transition-all duration-300">
+                            <div class="text-green-500 text-2xl mb-2"><i class="fas fa-rocket"></i></div>
+                            <h4 class="font-semibold text-gray-800 mb-1">Web Selesai</h4>
+                            <p class="text-sm text-gray-500">Online & siap digunakan setelah pelunasan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking CTA Button -->
+                <div class="mt-8 text-center md:text-left">
+                    <button id="openModal"
+                        class="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-xl font-semibold shadow-md transition-all duration-300">
+                        <i class="fab fa-whatsapp mr-2"></i> Booking Sekarang
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Booking -->
+    <div id="modal" class="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm hidden z-50">
+        <div class="bg-white rounded-2xl p-6 md:p-8 shadow-2xl w-[90%] max-w-md relative animate-fade-in">
+            <button id="closeModal"
+                class="absolute top-4 right-4 text-gray-600 hover:text-blue-700 transition duration-200">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <h3 class="text-xl font-bold text-blue-800 mb-4">Peringatan Sebelum Booking</h3>
+            <p class="text-gray-700 mb-6 text-sm md:text-base leading-relaxed">
+                Sebelum lanjut ke proses booking, mohon untuk <strong>tidak mengirimkan konten tidak pantas</strong>,
+                seperti ujaran kebencian, gambar kasar, atau hal-hal yang melanggar kebijakan kami.
+            </p>
+            <div class="flex justify-center gap-4">
+                <button id="closeModal2"
+                    class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-xl font-semibold transition-all duration-200">
+                    Batal
+                </button>
+                <a href="https://wa.me/6281234567890" target="_blank"
+                    class="px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-xl font-semibold flex items-center justify-center transition-all duration-200">
+                    <i class="fab fa-whatsapp mr-2"></i> Booking Sekarang
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Animation & Fade -->
+    <style>
+        @keyframes floatSmooth {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .animate-float-smooth {
+            animation: floatSmooth 6s ease-in-out infinite;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+    </style>
+
+    <!-- Modal Script -->
+    <script>
+        const modal = document.getElementById("modal");
+        document.getElementById("openModal").addEventListener("click", () => {
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        });
+        document.getElementById("closeModal").addEventListener("click", () => {
+            modal.classList.remove("flex");
+            modal.classList.add("hidden");
+        });
+        document.getElementById("closeModal2").addEventListener("click", () => {
+            modal.classList.remove("flex");
+            modal.classList.add("hidden");
+        });
+    </script>
+
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            duration: 1000,
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-blue-700 text-white pt-10 pb-6 px-4 md:px-20" data-aos="fade-up">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+
+            <!-- Brand -->
+            <div>
+                <h2 class="text-2xl font-bold mb-4">Vier Jasline</h2>
+                <p class="text-gray-200">Kami menyediakan jasa pembuatan website dan casing custom dengan kualitas
+                    premium
+                    dan desain profesional.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Navigasi</h3>
+                <ul class="space-y-2 text-gray-200">
+                    <li><a href="#home" class="hover:text-white transition">home</a></li>
+                    <li><a href="#about" class="hover:text-white transition">About</a></li>
+                    <li><a href="#services" class="hover:text-white transition">services</a></li>
+                    <li><a href="#portofolio" class="hover:text-white transition">Portofolio</a></li>
+                    <li><a href="#testimoni" class="hover:text-white transition">Testimoni</a></li>
+                    <li><a href="#contsct" class="hover:text-white transition">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Kontak Kami</h3>
+                <ul class="text-gray-200 space-y-2">
+                    <li><i class="fas fa-map-marker-alt mr-2"></i> Bogor, Indonesia</li>
+                    <li><i class="fas fa-envelope mr-2"></i> dfirlaapriliani@gmail.com</li>
+                    <li><i class="fas fa-phone mr-2"></i> +62 895 - 4041 - 71275</li>
+                </ul>
+            </div>
+
+            <!-- Social Media -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Ikuti Kami</h3>
+                <div class="flex space-x-4 text-xl">
+                    <a href="#" class="hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-white transition"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom line -->
+        <div class="mt-10 border-t border-white/20 pt-4 text-center text-gray-300 text-sm">
+            <p>&copy; 2025 Vier Jasline. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true, // animasi hanya sekali
+            duration: 1000, // durasi animasi
+        });
+
+        const openModalButton = document.getElementById('openModal');
+        const modal = document.getElementById('modal');
+        const closeModalButton = document.getElementById('closeModal');
+
+        openModalButton.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+        });
+
+        closeModalButton.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        const swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            }
+        });
+
+        const swiper = new Swiper(".mySwiper", {
+            slidesPerView: 2,
+            spaceBetween: 20,
+            loop: true,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 3
+                }
+            }
+        });
+
+
+        // Smooth Scroll + Auto Hide Mobile Nav
+        document.querySelectorAll('[data-scroll]').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+
+        // Active Link on Scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.menu-item');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const scrollY = window.pageYOffset;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionHeight = section.offsetHeight;
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
